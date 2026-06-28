@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Srivani Ankam — Backend Developer specializing in Java, Spring Boot, microservices and RESTful APIs deployed and monitored on AWS. 3+ years building scalable, secure applications." />
+<meta name="author" content="Srivani Ankam" />
+<title>Srivani Ankam · Backend Developer</title>
+
+<!-- Fonts: Poppins (display) + Inter (body) + JetBrains Mono (technical accents) -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<style>
+/* ============================================================
+   THEME TOKENS — Dark editorial + glassmorphism, emerald accent
+   ============================================================ */
+:root{
+  /* ---- Dark theme (default) ---- */
+  --bg:        #06080b;
+  --bg-soft:   #0a0e13;
+  --bg-elev:   #0d1218;
+  --surface:   rgba(255,255,255,0.025);
+  --glass:     rgba(16,22,28,0.55);
+  --glass-strong: rgba(18,25,32,0.78);
+  --border:    rgba(255,255,255,0.075);
+  --border-soft: rgba(255,255,255,0.05);
+  --border-glow: rgba(52,211,153,0.28);
+
+  --text:      #e8edf1;
+  --text-dim:  #aeb8c2;
+  --muted:     #8d99a5;   /* lightened for WCAG AA on glass */
+
+  --accent:    #34d399;   /* emerald / spring green */
+  --accent-2:  #10b981;
+  --accent-3:  #2dd4bf;   /* teal companion */
+  --accent-ink:#062b1f;
+  --glow:      rgba(52,211,153,0.45);
+  --glow-soft: rgba(52,211,153,0.14);
+
+  /* Constant brand emerald — buttons / mark / skip-link stay vivid in both themes */
+  --brand-1:   #34d399;
+  --brand-2:   #10b981;
+
+  /* Theme-dependent surfaces, scrims & effects */
+  --grid-line:    rgba(255,255,255,0.022);
+  --input-bg:     rgba(255,255,255,0.02);
+  --nav-bg:       rgba(6,8,11,0.72);
+  --menu-bg:      rgba(6,8,11,0.96);
+  --h1g3:         #a7f3d0;
+  --shadow-card:    0 18px 40px -24px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.05);
+  --shadow-card-lg: 0 26px 60px -30px rgba(0,0,0,0.78), inset 0 1px 0 rgba(255,255,255,0.05);
+  --shadow-portrait: 0 40px 80px -30px rgba(0,0,0,0.8), 0 0 0 1px rgba(52,211,153,0.06);
+  --scrim:        rgba(3,6,9,0.66);
+
+  --font-display: 'Poppins', system-ui, sans-serif;
+  --font-body:    'Inter', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, monospace;
+
+  --fs-body:   1.0625rem;
+  --maxw: 1180px;
+  --radius: 18px;
+  --radius-lg: 26px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-theme="light"]{
+  /* ---- Light theme — refined editorial light, not a flat invert ---- */
+  --bg:        #e9edf1;
+  --bg-soft:   #f2f5f8;
+  --bg-elev:   #ffffff;
+  --surface:   rgba(20,40,60,0.038);
+  --glass:     rgba(255,255,255,0.72);
+  --glass-strong: rgba(255,255,255,0.9);
+  --border:    rgba(20,40,60,0.12);
+  --border-soft: rgba(20,40,60,0.08);
+  --border-glow: rgba(5,150,105,0.45);
+
+  --text:      #14202b;
+  --text-dim:  #44535f;
+  --muted:     #5c6975;
+
+  --accent:    #059669;   /* emerald-600 — readable on light */
+  --accent-2:  #047857;
+  --accent-3:  #0d8f87;   /* teal-700 */
+  --glow:      rgba(5,150,105,0.26);
+  --glow-soft: rgba(5,150,105,0.10);
+
+  --grid-line:    rgba(20,40,60,0.05);
+  --input-bg:     rgba(20,40,60,0.03);
+  --nav-bg:       rgba(233,237,241,0.82);
+  --menu-bg:      rgba(233,237,241,0.97);
+  --h1g3:         #0e7490;
+  --shadow-card:    0 14px 34px -22px rgba(30,50,70,0.18), inset 0 1px 0 rgba(255,255,255,0.75);
+  --shadow-card-lg: 0 22px 50px -28px rgba(30,50,70,0.22), inset 0 1px 0 rgba(255,255,255,0.75);
+  --shadow-portrait: 0 34px 70px -30px rgba(30,50,70,0.30), 0 0 0 1px rgba(5,150,105,0.12);
+  --scrim:        rgba(20,32,45,0.42);
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*{ margin:0; padding:0; box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+@media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } }
+
+body{
+  font-family:var(--font-body);
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  overflow-x:hidden;
+  position:relative;
+}
+
+/* Visible focus ring for keyboard users (all interactive elements) */
+:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; border-radius:8px; }
+
+/* Smooth theme switch (class added only during the toggle, then removed) */
+html.theme-transition, html.theme-transition *{
+  transition: background-color .45s var(--ease), color .45s var(--ease),
+              border-color .45s var(--ease), box-shadow .45s var(--ease),
+              fill .45s var(--ease) !important;
+}
+
+/* Skip link */
+.skip-link{
+  position:fixed; left:16px; top:-70px; z-index:300;
+  background:linear-gradient(135deg,var(--brand-1),var(--brand-2)); color:#04130d;
+  padding:11px 18px; border-radius:11px; font-weight:600; text-decoration:none;
+  box-shadow:0 8px 24px -6px var(--glow); transition:top .25s var(--ease);
+}
+.skip-link:focus{ top:16px; }
+
+/* Ambient background — drifting emerald aurora + grid texture */
+.bg-fx{ position:fixed; inset:0; z-index:-2; overflow:hidden; pointer-events:none; }
+.bg-fx::before{
+  content:""; position:absolute; inset:-20%;
+  background:
+    radial-gradient(40% 35% at 18% 12%, rgba(52,211,153,0.10), transparent 70%),
+    radial-gradient(35% 40% at 85% 25%, rgba(45,212,191,0.08), transparent 70%),
+    radial-gradient(45% 45% at 65% 90%, rgba(16,185,129,0.07), transparent 70%);
+  animation: drift 22s ease-in-out infinite alternate;
+}
+.bg-grid{
+  position:fixed; inset:0; z-index:-2; pointer-events:none;
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size:64px 64px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 80%);
+          mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 80%);
+}
+/* Grain overlay for premium texture */
+.bg-noise{
+  position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:0.035;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+@keyframes drift{
+  0%{ transform:translate3d(0,0,0) scale(1); }
+  100%{ transform:translate3d(-3%,2%,0) scale(1.08); }
+}
+
+/* Cursor spotlight */
+.spotlight{
+  position:fixed; width:520px; height:520px; border-radius:50%;
+  background:radial-gradient(circle, var(--glow-soft), transparent 65%);
+  transform:translate(-50%,-50%); left:50%; top:-30%;
+  pointer-events:none; z-index:0; opacity:0; transition:opacity .5s ease;
+  mix-blend-mode:screen;
+}
+
+/* Scroll progress */
+.progress{
+  position:fixed; top:0; left:0; height:2px; width:0%;
+  background:linear-gradient(90deg, var(--accent-2), var(--accent), var(--accent-3));
+  z-index:200; box-shadow:0 0 12px var(--glow);
+}
+
+/* ============================================================
+   LAYOUT HELPERS
+   ============================================================ */
+.wrap{ width:100%; max-width:var(--maxw); margin-inline:auto; padding-inline:clamp(20px,5vw,40px); }
+section{ position:relative; padding:clamp(64px,9vw,120px) 0; }
+
+.eyebrow{
+  font-family:var(--font-mono); font-size:0.72rem; letter-spacing:0.28em;
+  text-transform:uppercase; color:var(--accent);
+  display:inline-flex; align-items:center; gap:10px;
+}
+.eyebrow::before{ content:""; width:26px; height:1px; background:var(--accent); opacity:0.7; }
+
+/* Editorial two-column section header */
+.sec-head{ display:grid; grid-template-columns:minmax(0,300px) 1fr; gap:clamp(24px,5vw,64px); align-items:start; }
+.sec-title{
+  font-family:var(--font-display); font-weight:700; margin:0;
+  font-size:clamp(2rem,5vw,3.1rem); line-height:1.02; letter-spacing:-0.02em;
+  position:sticky; top:120px;
+}
+.sec-title .n{ display:block; font-family:var(--font-mono); font-size:0.8rem; font-weight:500;
+  letter-spacing:0.2em; color:var(--muted); margin-bottom:14px; }
+.sec-title .accent{ color:var(--accent); }
+.sec-lead{ color:var(--text-dim); max-width:62ch; font-size:var(--fs-body); }
+
+@media (max-width: 860px){
+  .sec-head{ grid-template-columns:1fr; gap:28px; }
+  .sec-title{ position:static; }
+}
+
+/* ============================================================
+   GLASS CARD
+   ============================================================ */
+.glass{
+  background:var(--glass);
+  -webkit-backdrop-filter:blur(16px) saturate(140%);
+          backdrop-filter:blur(16px) saturate(140%);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  position:relative;
+  box-shadow:var(--shadow-card);
+}
+.glass::after{ /* top sheen */
+  content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+  background:linear-gradient(180deg, rgba(255,255,255,0.05), transparent 40%);
+  opacity:0.7;
+}
+.proj, .edu-card, form.contact-form{ box-shadow:var(--shadow-card-lg); }
+
+/* ============================================================
+   NAVBAR
+   ============================================================ */
+.nav{
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  transition:all .4s var(--ease);
+  padding:18px 0;
+}
+.nav.scrolled{
+  background:var(--nav-bg);
+  -webkit-backdrop-filter:blur(18px); backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border-soft);
+  padding:12px 0;
+}
+.nav-inner{ display:flex; align-items:center; justify-content:space-between; gap:20px; }
+.nav-right{ display:flex; align-items:center; gap:14px; }
+.theme-toggle{ width:40px; height:40px; flex:none; border-radius:11px; display:grid; place-items:center; cursor:pointer;
+  background:var(--surface); border:1px solid var(--border); color:var(--text-dim); transition:all .3s var(--ease); }
+.theme-toggle:hover{ color:var(--accent); border-color:var(--border-glow); transform:translateY(-2px); }
+.theme-toggle svg{ width:18px; height:18px; }
+.theme-toggle .ic-sun{ display:none; }
+.theme-toggle .ic-moon{ display:block; }
+[data-theme="light"] .theme-toggle .ic-sun{ display:block; }
+[data-theme="light"] .theme-toggle .ic-moon{ display:none; }
+.brand{ display:flex; align-items:center; gap:12px; text-decoration:none; color:var(--text); border-radius:12px; }
+.brand .mark{
+  width:40px; height:40px; border-radius:11px; display:grid; place-items:center;
+  font-family:var(--font-display); font-weight:700; font-size:1rem; color:#04130d;
+  background:linear-gradient(135deg, var(--brand-1), #2dd4bf);
+  box-shadow:0 6px 22px var(--glow); letter-spacing:-0.02em;
+}
+.brand b{ font-family:var(--font-display); font-weight:600; font-size:0.98rem; letter-spacing:-0.01em; }
+.brand small{ display:block; font-size:0.68rem; color:var(--muted); font-weight:400; letter-spacing:0.06em; }
+
+.nav-links{ display:flex; align-items:center; gap:6px; list-style:none; }
+.nav-links a{
+  text-decoration:none; color:var(--text-dim); font-size:0.88rem; font-weight:500;
+  padding:8px 14px; border-radius:10px; transition:all .25s ease; position:relative;
+}
+.nav-links a:hover{ color:var(--text); background:var(--surface); }
+.nav-links a.active{ color:var(--accent); }
+
+.btn{
+  display:inline-flex; align-items:center; gap:9px; cursor:pointer;
+  font-family:var(--font-body); font-weight:600; font-size:0.88rem;
+  padding:11px 20px; border-radius:12px; text-decoration:none; border:1px solid transparent;
+  transition:all .3s var(--ease); white-space:nowrap;
+}
+.btn svg{ width:16px; height:16px; }
+.btn-primary{ background:linear-gradient(135deg, var(--brand-1), var(--brand-2)); color:#04130d;
+  box-shadow:0 8px 24px -6px var(--glow); }
+.btn-primary:hover{ transform:translateY(-2px); box-shadow:0 14px 34px -6px var(--glow); }
+.btn-ghost{ background:var(--surface); color:var(--text); border-color:var(--border); }
+.btn-ghost:hover{ border-color:var(--border-glow); color:var(--accent); transform:translateY(-2px); }
+
+.nav-toggle{ display:none; background:none; border:none; cursor:pointer; padding:8px; border-radius:10px; }
+.nav-toggle span{ display:block; width:24px; height:2px; background:var(--text); margin:5px 0; border-radius:2px; transition:.3s var(--ease); }
+.nav.open .nav-toggle span:nth-child(1){ transform:translateY(7px) rotate(45deg); }
+.nav.open .nav-toggle span:nth-child(2){ opacity:0; }
+.nav.open .nav-toggle span:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
+
+@media (max-width: 920px){
+  .nav-links, .nav .btn{ display:none; }
+  .nav-toggle{ display:block; }
+  .nav.open .mobile-menu{ display:flex; }
+}
+.mobile-menu{
+  display:none; position:fixed; inset:0; z-index:99; flex-direction:column;
+  align-items:center; justify-content:center; gap:8px;
+  background:var(--menu-bg); -webkit-backdrop-filter:blur(20px); backdrop-filter:blur(20px);
+}
+.mobile-menu a{ color:var(--text); text-decoration:none; font-family:var(--font-display);
+  font-size:1.5rem; font-weight:500; padding:12px; border-radius:12px; }
+.mobile-menu a:hover{ color:var(--accent); }
+.mobile-menu .btn{ display:inline-flex; margin-top:14px; }
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{ padding-top:clamp(130px,18vh,200px); padding-bottom:clamp(50px,6vw,72px); }
+.hero-grid{ display:grid; grid-template-columns:1.15fr 0.85fr; gap:clamp(30px,5vw,70px); align-items:center; }
+@media (max-width: 920px){ .hero-grid{ grid-template-columns:1fr; text-align:center; } }
+
+.hero h1{
+  font-family:var(--font-display); font-weight:800;
+  font-size:clamp(2.7rem,7vw,4.7rem); line-height:0.98; letter-spacing:-0.035em;
+  margin:18px 0 14px;
+}
+.hero h1 .grad{
+  background:linear-gradient(120deg, var(--accent), var(--accent-3) 60%, var(--h1g3));
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.hero .role{
+  font-family:var(--font-mono); font-size:clamp(0.95rem,2vw,1.15rem); color:var(--text-dim);
+  min-height:1.6em; display:flex; align-items:center; gap:10px; justify-content:flex-start;
+}
+@media (max-width: 920px){ .hero .role{ justify-content:center; } }
+.hero .role .blink{ color:var(--accent); animation:blink 1.1s steps(1) infinite; }
+@keyframes blink{ 50%{ opacity:0; } }
+
+.hero p.lead{ color:var(--text-dim); max-width:54ch; margin:22px 0 30px; font-size:var(--fs-body); }
+@media (max-width: 920px){ .hero p.lead{ margin-inline:auto; } }
+.hero-cta{ display:flex; gap:14px; flex-wrap:wrap; }
+@media (max-width: 920px){ .hero-cta{ justify-content:center; } }
+
+.hero-tags{ display:flex; gap:8px; flex-wrap:wrap; margin-top:34px; }
+@media (max-width: 920px){ .hero-tags{ justify-content:center; } }
+.hero-tags .t{
+  font-family:var(--font-mono); font-size:0.72rem; color:var(--text-dim);
+  padding:6px 12px; border-radius:30px; border:1px solid var(--border);
+  background:var(--surface); letter-spacing:0.02em;
+  display:inline-flex; align-items:center; gap:7px;
+}
+.hero-tags .t svg{ width:13px; height:13px; flex:none; color:var(--accent); }
+
+/* Photo frame */
+.portrait-wrap{ position:relative; justify-self:center; width:min(380px,82vw); }
+.portrait-deco{ position:absolute; inset:-22px; border:1px solid var(--border); border-radius:30px;
+  -webkit-mask-image:linear-gradient(180deg,#000,transparent); mask-image:linear-gradient(180deg,#000,transparent); }
+.portrait-deco::before, .portrait-deco::after{ content:""; position:absolute; width:10px; height:10px; border:1.5px solid var(--accent); }
+.portrait-deco::before{ top:-1px; left:-1px; border-right:0; border-bottom:0; }
+.portrait-deco::after{ bottom:-1px; right:-1px; border-left:0; border-top:0; }
+.portrait{
+  position:relative; aspect-ratio:4/5; border-radius:26px; overflow:hidden;
+  border:1px solid var(--border); background:var(--bg-elev);
+  box-shadow:var(--shadow-portrait);
+}
+.portrait img{ width:100%; height:100%; object-fit:cover; display:block; filter:contrast(1.02) saturate(1.02); }
+.portrait .fallback{
+  position:absolute; inset:0; display:grid; place-items:center; gap:8px;
+  background:radial-gradient(120% 120% at 30% 10%, #11241c, #06080b);
+}
+.portrait .fallback .ini{ font-family:var(--font-display); font-weight:800; font-size:5.2rem;
+  background:linear-gradient(135deg,var(--accent),var(--accent-3)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.portrait .fallback small{ font-family:var(--font-mono); font-size:0.7rem; color:var(--muted); letter-spacing:0.18em; text-transform:uppercase; }
+.portrait .glow-ring{ position:absolute; inset:0; border-radius:26px; box-shadow:inset 0 0 60px -20px var(--glow); pointer-events:none; }
+
+/* Floating tech badges around portrait */
+.float-badge{
+  position:absolute; width:54px; height:54px; border-radius:15px; display:grid; place-items:center;
+  background:var(--glass-strong); border:1px solid var(--border);
+  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+  box-shadow:0 12px 30px -10px rgba(0,0,0,0.7); z-index:3;
+  animation:floaty 5s ease-in-out infinite;
+}
+.float-badge img{ width:30px; height:30px; }
+.float-badge.b1{ top:-14px; left:-26px; animation-delay:0s; }
+.float-badge.b2{ top:38%; right:-30px; animation-delay:.8s; }
+.float-badge.b3{ bottom:34%; left:-32px; animation-delay:1.6s; }
+.float-badge.b4{ bottom:-16px; right:18%; animation-delay:2.2s; }
+@keyframes floaty{ 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-12px) } }
+/* keep badges inside the viewport on small screens (no reliance on overflow clipping) */
+@media (max-width: 560px){
+  .float-badge{ width:46px; height:46px; }
+  .float-badge img{ width:25px; height:25px; }
+  .float-badge.b1{ left:-6px; top:-10px; }
+  .float-badge.b2{ right:-8px; }
+  .float-badge.b3{ left:-8px; }
+  .float-badge.b4{ right:10%; bottom:-10px; }
+}
+@media (max-width: 380px){
+  .float-badge.b2, .float-badge.b3{ display:none; }
+}
+
+/* Status pill */
+.status{ display:inline-flex; align-items:center; gap:9px; font-size:0.8rem; color:var(--text-dim);
+  background:var(--surface); border:1px solid var(--border); padding:7px 14px; border-radius:30px; font-weight:500; }
+.status .dot{ width:8px; height:8px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 0 var(--glow); animation:pulse 2s infinite; }
+@keyframes pulse{ 0%{ box-shadow:0 0 0 0 var(--glow) } 70%{ box-shadow:0 0 0 8px transparent } 100%{ box-shadow:0 0 0 0 transparent } }
+
+/* ============================================================
+   STATS BAR
+   ============================================================ */
+.stats{ display:grid; grid-template-columns:repeat(5,1fr); gap:16px; margin-top:clamp(28px,4vw,42px); }
+@media (max-width: 980px){ .stats{ grid-template-columns:repeat(3,1fr); } }
+@media (max-width: 560px){ .stats{ grid-template-columns:repeat(2,1fr); } }
+.stat{ padding:24px 22px; border-radius:var(--radius); text-align:left; }
+.stat .num{ font-family:var(--font-display); font-weight:700; font-size:clamp(1.9rem,4vw,2.6rem);
+  letter-spacing:-0.03em; line-height:1; color:var(--text); display:flex; align-items:baseline; gap:2px; }
+.stat .num .plus{ color:var(--accent); font-size:0.7em; }
+.stat .lbl{ color:var(--muted); font-size:0.82rem; margin-top:10px; font-family:var(--font-mono); letter-spacing:0.02em; }
+
+/* ============================================================
+   ABOUT
+   ============================================================ */
+.about-body p{ color:var(--text-dim); font-size:var(--fs-body); margin-bottom:18px; }
+.about-body p b{ color:var(--text); font-weight:600; }
+.about-body .hl{ color:var(--accent); font-weight:600; }
+.facts{ display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-top:30px; }
+@media (max-width: 520px){ .facts{ grid-template-columns:1fr; } }
+.fact{ display:flex; gap:14px; align-items:flex-start; padding:18px; border-radius:14px; }
+.fact .ico{ width:38px; height:38px; flex:none; border-radius:11px; display:grid; place-items:center;
+  background:linear-gradient(135deg, rgba(52,211,153,0.16), rgba(45,212,191,0.05)); border:1px solid var(--border-glow); color:var(--accent); }
+.fact .ico svg{ width:19px; height:19px; }
+.fact h4{ font-size:0.78rem; color:var(--muted); font-weight:500; font-family:var(--font-mono); letter-spacing:0.04em; text-transform:uppercase; margin-bottom:3px; }
+.fact p{ font-size:0.95rem; color:var(--text); font-weight:500; margin:0; }
+
+/* ============================================================
+   SKILLS
+   ============================================================ */
+.skill-groups{ display:grid; gap:16px; }
+.skill-card{ padding:24px 26px; border-radius:var(--radius); }
+.skill-card h3{ font-family:var(--font-display); font-weight:600; font-size:1.05rem; margin-bottom:4px;
+  display:flex; align-items:center; gap:12px; }
+.skill-card h3 .gi{ width:34px; height:34px; border-radius:10px; display:grid; place-items:center; flex:none;
+  background:linear-gradient(135deg, rgba(52,211,153,0.16), transparent); border:1px solid var(--border); color:var(--accent); }
+.skill-card h3 .gi svg{ width:18px; height:18px; }
+.skill-card .sub{ color:var(--muted); font-size:0.8rem; margin:0 0 18px 46px; font-family:var(--font-mono); }
+.chips{ display:flex; flex-wrap:wrap; gap:9px; }
+.chip{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:8px 13px; border-radius:11px; font-size:0.84rem; font-weight:500; color:var(--text-dim);
+  background:var(--surface); border:1px solid var(--border); transition:all .25s var(--ease); cursor:default;
+}
+.chip img{ width:17px; height:17px; object-fit:contain; }
+.chip:hover{ color:var(--text); border-color:var(--border-glow); transform:translateY(-3px);
+  box-shadow:0 10px 24px -12px var(--glow); background:rgba(52,211,153,0.06); }
+
+/* ============================================================
+   EXPERIENCE TIMELINE
+   ============================================================ */
+.timeline{ position:relative; display:grid; gap:20px; }
+.timeline::before{ content:""; position:absolute; left:21px; top:8px; bottom:8px; width:2px;
+  background:linear-gradient(180deg, var(--accent), rgba(52,211,153,0.05)); }
+@media (max-width: 600px){ .timeline::before{ left:15px; } }
+.tl-item{ position:relative; padding-left:60px; }
+@media (max-width: 600px){ .tl-item{ padding-left:48px; } }
+.tl-node{ position:absolute; left:12px; top:6px; width:20px; height:20px; border-radius:50%;
+  background:var(--bg); border:2px solid var(--accent); display:grid; place-items:center; z-index:2; }
+@media (max-width: 600px){ .tl-node{ left:6px; } }
+.tl-node::before{ content:""; width:7px; height:7px; border-radius:50%; background:var(--accent); box-shadow:0 0 10px var(--glow); }
+.exp-card{ padding:26px 28px; border-radius:var(--radius); transition:border-color .3s ease, transform .3s ease; }
+.exp-card:hover{ border-color:var(--border-glow); transform:translateX(4px); }
+.exp-top{ display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px 18px; align-items:baseline; }
+.exp-role{ font-family:var(--font-display); font-weight:600; font-size:1.18rem; letter-spacing:-0.01em; }
+.exp-co{ color:var(--accent-3); font-weight:600; }
+.exp-meta{ display:flex; flex-wrap:wrap; gap:6px 16px; margin:8px 0 4px; color:var(--muted); font-size:0.82rem; font-family:var(--font-mono); }
+.exp-meta span{ display:inline-flex; align-items:center; gap:6px; }
+.exp-meta svg{ width:13px; height:13px; opacity:0.8; }
+.exp-proj{ display:inline-flex; align-items:center; gap:7px; margin:12px 0 16px; font-size:0.8rem;
+  padding:5px 12px; border-radius:8px; background:rgba(52,211,153,0.08); border:1px solid var(--border-glow);
+  color:var(--accent); font-family:var(--font-mono); }
+.exp-list{ list-style:none; display:grid; gap:11px; }
+.exp-list li{ position:relative; padding-left:24px; color:var(--text-dim); font-size:0.94rem; }
+.exp-list li::before{ content:""; position:absolute; left:2px; top:9px; width:7px; height:7px; border-radius:2px;
+  background:transparent; border:1.5px solid var(--accent); transform:rotate(45deg); }
+.exp-list li b{ color:var(--text); font-weight:600; }
+
+/* ============================================================
+   PROJECTS
+   ============================================================ */
+.proj-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(290px,100%),1fr)); gap:18px; }
+.proj{ padding:0; border-radius:var(--radius-lg); overflow:hidden; transition:transform .4s var(--ease), border-color .3s ease;
+  transform-style:preserve-3d; }
+.proj:hover{ border-color:var(--border-glow); }
+.proj .pj-head{ padding:24px 24px 0; display:flex; justify-content:space-between; align-items:flex-start; gap:14px; }
+.proj .pj-icon{ width:50px; height:50px; border-radius:14px; display:grid; place-items:center; flex:none;
+  background:linear-gradient(135deg, rgba(52,211,153,0.18), rgba(45,212,191,0.04)); border:1px solid var(--border-glow); }
+.proj .pj-icon img{ width:28px; height:28px; }
+.proj .pj-icon svg{ width:24px; height:24px; color:var(--accent); }
+.proj .pj-tag{ font-family:var(--font-mono); font-size:0.68rem; color:var(--muted); letter-spacing:0.08em;
+  border:1px solid var(--border); padding:4px 9px; border-radius:20px; text-transform:uppercase; white-space:nowrap; }
+.proj h3{ font-family:var(--font-display); font-weight:600; font-size:1.25rem; padding:18px 24px 2px; letter-spacing:-0.01em; }
+.proj .pj-co{ padding:0 24px; color:var(--text-dim); font-size:0.82rem; font-weight:500; font-family:var(--font-mono); }
+.proj .pj-desc{ padding:14px 24px 0; color:var(--text-dim); font-size:0.92rem; }
+.proj .pj-stack{ display:flex; flex-wrap:wrap; gap:7px; padding:18px 24px 24px; }
+.proj .pj-stack span{ font-size:0.72rem; color:var(--text-dim); background:var(--surface);
+  border:1px solid var(--border); padding:4px 10px; border-radius:7px; font-family:var(--font-mono); }
+.pj-more{ display:inline-flex; align-items:center; gap:8px; margin:0 24px 24px; cursor:pointer;
+  font-family:var(--font-body); font-weight:600; font-size:0.82rem; color:var(--accent);
+  background:rgba(52,211,153,0.08); border:1px solid var(--border-glow); padding:9px 15px; border-radius:10px;
+  transition:all .25s var(--ease); }
+.pj-more:hover{ background:rgba(52,211,153,0.14); transform:translateY(-2px); box-shadow:0 8px 20px -10px var(--glow); }
+.pj-more svg{ width:15px; height:15px; }
+
+/* ============================================================
+   PROJECT DEEP-DIVE MODAL
+   ============================================================ */
+.modal-overlay{ position:fixed; inset:0; z-index:300; display:none; padding:24px;
+  align-items:center; justify-content:center; background:var(--scrim);
+  -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px); }
+.modal-overlay.open{ display:flex; animation:fadeIn .25s var(--ease); }
+@keyframes fadeIn{ from{ opacity:0 } to{ opacity:1 } }
+.modal{ width:min(720px,100%); max-height:88vh; overflow-y:auto; border-radius:var(--radius-lg);
+  background:var(--glass-strong); -webkit-backdrop-filter:blur(22px) saturate(150%); backdrop-filter:blur(22px) saturate(150%);
+  border:1px solid var(--border); box-shadow:var(--shadow-card-lg); position:relative;
+  padding:34px clamp(22px,4vw,38px); }
+.modal-overlay.open .modal{ animation:popIn .35s var(--ease); }
+@keyframes popIn{ from{ opacity:0; transform:translateY(16px) scale(.985) } to{ opacity:1; transform:none } }
+.modal:focus{ outline:none; }
+.modal-close{ position:absolute; top:16px; right:16px; width:38px; height:38px; border-radius:10px; cursor:pointer;
+  display:grid; place-items:center; background:var(--surface); border:1px solid var(--border); color:var(--text-dim);
+  transition:all .25s var(--ease); }
+.modal-close:hover{ color:var(--accent); border-color:var(--border-glow); transform:rotate(90deg); }
+.modal-close svg{ width:18px; height:18px; }
+.modal .m-eyebrow{ font-family:var(--font-mono); font-size:0.72rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--accent); }
+.modal h3{ font-family:var(--font-display); font-weight:700; font-size:clamp(1.4rem,3vw,1.9rem); letter-spacing:-0.02em; margin:10px 0 4px; }
+.modal .m-co{ color:var(--text-dim); font-family:var(--font-mono); font-size:0.8rem; }
+.modal .m-scale{ display:flex; flex-wrap:wrap; gap:8px; margin:16px 0 20px; }
+.modal .m-scale span{ font-family:var(--font-mono); font-size:0.72rem; color:var(--accent); background:rgba(52,211,153,0.08);
+  border:1px solid var(--border-glow); padding:6px 11px; border-radius:8px; }
+.modal .m-lead{ color:var(--text-dim); font-size:0.96rem; margin-bottom:6px; }
+.modal .m-lead b{ color:var(--text); font-weight:600; }
+.modal h4{ font-family:var(--font-display); font-weight:600; font-size:0.95rem; margin:20px 0 11px;
+  display:flex; align-items:center; gap:9px; color:var(--text); }
+.modal h4::before{ content:""; width:14px; height:2px; background:var(--accent); border-radius:2px; flex:none; }
+.modal .m-list{ list-style:none; display:grid; gap:10px; }
+.modal .m-list li{ position:relative; padding-left:22px; color:var(--text-dim); font-size:0.92rem; }
+.modal .m-list li::before{ content:""; position:absolute; left:2px; top:8px; width:7px; height:7px; border-radius:2px;
+  border:1.5px solid var(--accent); transform:rotate(45deg); }
+.modal .m-list li b{ color:var(--text); font-weight:600; }
+.modal .m-stack{ display:flex; flex-wrap:wrap; gap:7px; margin-top:14px; }
+.modal .m-stack span{ font-size:0.72rem; color:var(--text-dim); background:var(--surface); border:1px solid var(--border);
+  padding:5px 11px; border-radius:8px; font-family:var(--font-mono); }
+.modal .m-co, .modal .m-lead, .modal .m-list li{ overflow-wrap:anywhere; word-break:break-word; }
+@media (prefers-reduced-motion: reduce){
+  .modal-close:hover{ transform:none; }
+  .modal-overlay.open, .modal-overlay.open .modal{ animation:none; }
+}
+
+/* ============================================================
+   EDUCATION
+   ============================================================ */
+.edu-card{ padding:30px 32px; border-radius:var(--radius-lg); display:flex; gap:24px; align-items:center; flex-wrap:wrap; }
+.edu-card .cap{ width:64px; height:64px; flex:none; border-radius:18px; display:grid; place-items:center;
+  background:linear-gradient(135deg, rgba(52,211,153,0.16), transparent); border:1px solid var(--border-glow); color:var(--accent); }
+.edu-card .cap svg{ width:30px; height:30px; }
+.edu-card h3{ font-family:var(--font-display); font-weight:600; font-size:1.3rem; letter-spacing:-0.01em; }
+.edu-card .inst{ color:var(--text-dim); margin-top:4px; }
+.edu-card .yr{ margin-left:auto; font-family:var(--font-mono); color:var(--accent); font-size:0.95rem;
+  border:1px solid var(--border-glow); padding:8px 16px; border-radius:30px; background:rgba(52,211,153,0.06); }
+@media (max-width: 560px){ .edu-card .yr{ margin-left:0; } }
+
+/* ============================================================
+   CONTACT
+   ============================================================ */
+.contact-grid{ display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+@media (max-width: 860px){ .contact-grid{ grid-template-columns:1fr; } }
+.contact-info{ display:grid; gap:12px; align-content:start; }
+.ci-tile{ display:flex; align-items:center; gap:16px; padding:18px 20px; border-radius:14px;
+  text-decoration:none; color:var(--text); transition:all .3s var(--ease); }
+.ci-tile:hover{ border-color:var(--border-glow); transform:translateX(5px); background:rgba(52,211,153,0.05); }
+.ci-tile .ci-ico{ width:44px; height:44px; flex:none; border-radius:12px; display:grid; place-items:center;
+  background:linear-gradient(135deg, rgba(52,211,153,0.16), transparent); border:1px solid var(--border); color:var(--accent); }
+.ci-tile .ci-ico svg{ width:20px; height:20px; }
+.ci-tile h4{ font-size:0.74rem; color:var(--muted); font-family:var(--font-mono); letter-spacing:0.06em; text-transform:uppercase; font-weight:500; }
+.ci-tile p{ font-size:0.96rem; color:var(--text); font-weight:500; margin-top:2px; word-break:break-word; overflow-wrap:anywhere; }
+
+form.contact-form{ padding:28px; border-radius:var(--radius-lg); display:grid; gap:16px; }
+.field{ display:grid; gap:7px; }
+.field label{ font-size:0.78rem; color:var(--text-dim); font-family:var(--font-mono); letter-spacing:0.03em; }
+.field input, .field textarea{
+  width:100%; background:var(--input-bg); border:1px solid var(--border); border-radius:12px;
+  padding:13px 16px; color:var(--text); font-family:var(--font-body); font-size:0.95rem; transition:all .25s ease; resize:vertical;
+}
+.field input:focus, .field textarea:focus{ outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--glow-soft); background:rgba(52,211,153,0.03); }
+.field input::placeholder, .field textarea::placeholder{ color:var(--muted); }
+form.contact-form .btn-primary{ justify-content:center; width:100%; padding:14px; font-size:0.95rem; }
+.form-note{ font-size:0.78rem; color:var(--muted); text-align:center; }
+.form-note.ok{ color:var(--accent); }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer{ border-top:1px solid var(--border-soft); padding:36px 0; margin-top:30px; }
+.foot-inner{ display:flex; justify-content:space-between; align-items:center; gap:18px; flex-wrap:wrap; }
+.foot-inner p{ color:var(--muted); font-size:0.85rem; }
+.foot-inner .heart{ color:var(--accent); }
+.foot-social{ display:flex; gap:10px; }
+.foot-social a{ width:40px; height:40px; border-radius:11px; display:grid; place-items:center;
+  border:1px solid var(--border); color:var(--text-dim); transition:all .3s var(--ease); background:var(--surface); }
+.foot-social a:hover{ color:var(--accent); border-color:var(--border-glow); transform:translateY(-3px); }
+.foot-social svg{ width:18px; height:18px; }
+
+/* Back to top */
+.totop{ position:fixed; right:24px; bottom:24px; z-index:90; width:46px; height:46px; border-radius:13px;
+  display:grid; place-items:center; cursor:pointer; border:1px solid var(--border);
+  background:var(--glass-strong); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+  color:var(--accent); opacity:0; transform:translateY(20px); pointer-events:none; transition:all .4s var(--ease); }
+.totop.show{ opacity:1; transform:translateY(0); pointer-events:auto; }
+.totop:hover{ box-shadow:0 10px 28px -8px var(--glow); transform:translateY(-3px); }
+.totop svg{ width:20px; height:20px; }
+
+/* ============================================================
+   SCROLL REVEAL
+   ============================================================ */
+.reveal{ opacity:0; transform:translateY(30px); transition:opacity .8s var(--ease), transform .8s var(--ease); }
+.reveal.in{ opacity:1; transform:none; }
+.reveal[data-d="1"]{ transition-delay:.08s; }
+.reveal[data-d="2"]{ transition-delay:.16s; }
+.reveal[data-d="3"]{ transition-delay:.24s; }
+.reveal[data-d="4"]{ transition-delay:.32s; }
+@media (prefers-reduced-motion: reduce){
+  .reveal{ opacity:1; transform:none; transition:none; }
+  .bg-fx::before, .float-badge, .status .dot, .hero .role .blink{ animation:none !important; }
+  .chip:hover, .exp-card:hover, .ci-tile:hover, .proj:hover, .btn:hover, .btn-ghost:hover, .btn-primary:hover, .foot-social a:hover, .totop:hover{ transform:none !important; }
+}
+</style>
+<script>
+  /* Set theme before first paint to avoid a flash (default: dark) */
+  (function(){ try{ if(localStorage.getItem('theme') === 'light'){ document.documentElement.setAttribute('data-theme','light'); } }catch(e){} })();
+</script>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to content</a>
+
+<!-- Ambient background -->
+<div class="bg-fx" aria-hidden="true"></div>
+<div class="bg-grid" aria-hidden="true"></div>
+<div class="bg-noise" aria-hidden="true"></div>
+<div class="spotlight" id="spotlight" aria-hidden="true"></div>
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<!-- ===================== NAV ===================== -->
+<nav class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a href="#top" class="brand" aria-label="Srivani Ankam — home">
+      <span class="mark" aria-hidden="true">SA</span>
+      <span><b>Srivani Ankam</b><small>Backend Developer</small></span>
+    </a>
+    <div class="nav-right">
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to light theme" title="Toggle light / dark mode">
+        <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.2"/><line x1="12" y1="2" x2="12" y2="4.5"/><line x1="12" y1="19.5" x2="12" y2="22"/><line x1="2" y1="12" x2="4.5" y2="12"/><line x1="19.5" y1="12" x2="22" y2="12"/><line x1="4.9" y1="4.9" x2="6.7" y2="6.7"/><line x1="17.3" y1="17.3" x2="19.1" y2="19.1"/><line x1="4.9" y1="19.1" x2="6.7" y2="17.3"/><line x1="17.3" y1="6.7" x2="19.1" y2="4.9"/></svg>
+      </button>
+      <a href="Srivani%20Ankam.pdf" download class="btn btn-primary">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Resume
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Site menu" aria-hidden="true">
+  <a href="#about">About</a>
+  <a href="#skills">Skills</a>
+  <a href="#experience">Experience</a>
+  <a href="#projects">Projects</a>
+  <a href="#education">Education</a>
+  <a href="#contact">Contact</a>
+  <a href="Srivani%20Ankam.pdf" download class="btn btn-primary">Download Resume</a>
+</div>
+
+<span id="top"></span>
+
+<!-- ===================== HERO ===================== -->
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <span class="status reveal in"><span class="dot"></span> Open to backend &amp; full-stack roles</span>
+      <h1 class="reveal in" data-d="1">Hi, I'm Srivani —<br><span class="grad">I build backends<br>that scale.</span></h1>
+      <div class="role reveal in" data-d="2"><span>&lt;</span><span id="typed"></span><span class="blink">_</span><span>/&gt;</span></div>
+      <p class="lead reveal in" data-d="3">A results-driven <b>Backend Developer</b> with <b>3+ years</b> crafting scalable, secure applications in Java &amp; the Spring ecosystem — from microservices and RESTful APIs to systems deployed and monitored on AWS.</p>
+      <div class="hero-cta reveal in" data-d="4">
+        <a href="#contact" class="btn btn-primary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Let's connect
+        </a>
+        <a href="Srivani%20Ankam.pdf" download class="btn btn-ghost">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download CV
+        </a>
+      </div>
+      <div class="hero-tags reveal in" data-d="4">
+        <span class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 6 2 12 8 18"/><polyline points="16 6 22 12 16 18"/></svg> Java · Spring Boot</span>
+        <span class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg> Microservices</span>
+        <span class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg> AWS Cloud</span>
+        <span class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> RESTful APIs</span>
+      </div>
+    </div>
+
+    <div class="portrait-wrap reveal in" data-d="2">
+      <div class="portrait-deco" aria-hidden="true"></div>
+      <div class="portrait">
+        <div class="fallback" id="portraitFallback">
+          <span class="ini">SA</span>
+          <small>Srivani Ankam</small>
+        </div>
+        <img src="assets/srivani.png" alt="Portrait of Srivani Ankam" id="portraitImg"
+             onerror="this.style.display='none'; document.getElementById('portraitFallback').style.display='grid';"
+             onload="document.getElementById('portraitFallback').style.display='none';" />
+        <div class="glow-ring" aria-hidden="true"></div>
+      </div>
+      <div class="float-badge b1" title="Java" aria-hidden="true"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg" alt="" onerror="this.parentElement.style.display='none'"/></div>
+      <div class="float-badge b2" title="Spring" aria-hidden="true"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/spring/spring-original.svg" alt="" onerror="this.parentElement.style.display='none'"/></div>
+      <div class="float-badge b3" title="AWS" aria-hidden="true"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="" onerror="this.parentElement.style.display='none'"/></div>
+      <div class="float-badge b4" title="Docker" aria-hidden="true"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" alt="" onerror="this.parentElement.style.display='none'"/></div>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="wrap">
+    <div class="stats">
+      <div class="stat glass reveal" data-d="1"><div class="num"><span class="count" data-to="3">0</span><span class="plus">+</span></div><div class="lbl">Years Experience</div></div>
+      <div class="stat glass reveal" data-d="2"><div class="num"><span class="count" data-to="4">0</span></div><div class="lbl">Key Projects</div></div>
+      <div class="stat glass reveal" data-d="3"><div class="num"><span class="count" data-to="18">0</span></div><div class="lbl">Microservices</div></div>
+      <div class="stat glass reveal" data-d="4"><div class="num"><span class="count" data-to="20">0</span><span class="plus">+</span></div><div class="lbl">Technologies</div></div>
+      <div class="stat glass reveal" data-d="4"><div class="num"><span class="count" data-to="3">0</span></div><div class="lbl">Product Teams</div></div>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ===================== ABOUT ===================== -->
+<section id="about" aria-labelledby="about-h">
+  <div class="wrap sec-head">
+    <h2 class="sec-title reveal" id="about-h"><span class="n">01 — Introduction</span>About <span class="accent">me</span></h2>
+    <div class="about-body reveal" data-d="1">
+      <p>I'm <b>Srivani Ankam</b>, a backend developer based in <span class="hl">Hyderabad</span> who enjoys turning complex requirements into clean, dependable systems. Over the past <b>3+ years</b> I've specialized in <span class="hl">Java/JEE</span> development and the Spring Framework, building scalable applications, microservices, and RESTful APIs that hold up in production.</p>
+      <p>My day-to-day spans <b>designing secure access-control models</b>, optimizing database access and performance, and integrating tools like Redis, Elasticsearch, and AWS to keep systems fast and observable. I care about clean architecture, real performance improvements, and shipping in <b>Agile</b> teams.</p>
+      <p>I'm a strong collaborator who thrives with cross-functional teams — and I'm always eager to take on innovative projects that push me toward emerging technologies.</p>
+
+      <div class="facts">
+        <div class="fact glass">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+          <div><h4>Location</h4><p>Hyderabad, India</p></div>
+        </div>
+        <div class="fact glass">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span>
+          <div><h4>Experience</h4><p>3+ Years, Backend</p></div>
+        </div>
+        <div class="fact glass">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span>
+          <div><h4>Focus</h4><p>Java · Spring · Cloud</p></div>
+        </div>
+        <div class="fact glass">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></span>
+          <div><h4>Availability</h4><p>Open to Work</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SKILLS ===================== -->
+<section id="skills" aria-labelledby="skills-h">
+  <div class="wrap sec-head">
+    <h2 class="sec-title reveal" id="skills-h"><span class="n">02 — Toolbox</span>Skills &amp; <span class="accent">stack</span></h2>
+    <div class="reveal" data-d="1">
+      <p class="sec-lead" style="margin-bottom:26px;">The technologies I reach for to design, build, secure, and scale backend systems — from language fundamentals to cloud infrastructure.</p>
+      <div class="skill-groups">
+
+        <div class="skill-card glass">
+          <h3><span class="gi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span>Languages &amp; Core</h3>
+          <p class="sub">// the foundation</p>
+          <div class="chips">
+            <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg" alt="" onerror="this.remove()"/>Java SE</span>
+            <span class="chip">Servlets</span>
+            <span class="chip">JDBC</span>
+            <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/junit/junit-original.svg" alt="" onerror="this.remove()"/>JUnit</span>
+          </div>
+        </div>
+
+        <div class="skill-card glass">
+          <h3><span class="gi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></span>Frameworks</h3>
+          <p class="sub">// the spring ecosystem</p>
+          <div class="chips">
+            <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/spring/spring-original.svg" alt="" onerror="this.remove()"/>Spring Boot</span>
+            <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/spring/spring-original.svg" alt="" onerror="this.remove()"/>Spring MVC</span>
+            <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/spring/spring-original.svg" alt="" onerror="this.remove()"/>Spring Cloud</span>
+            <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/spring/spring-original.svg" alt="" onerror="this.remove()"/>Spring Security</span>
+            <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/spring/spring-original.svg" alt="" onerror="this.remove()"/>Spring Data JPA</span>
+            <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/hibernate/hibernate-original.svg" alt="" onerror="this.remove()"/>Hibernate</span>
+            <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/spring/spring-original.svg" alt="" onerror="this.remove()"/>Spring WebFlux (Reactive)</span>
+          </div>
+        </div>
+
+        <div class="skill-card glass">
+          <h3><span class="gi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg></span>Databases</h3>
+          <p class="sub">// SQL &amp; NoSQL persistence</p>
+          <div class="chips">
+            <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" alt="" onerror="this.remove()"/>MySQL</span>
+            <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" alt="" onerror="this.remove()"/>PostgreSQL</span>
+            <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg" alt="" onerror="this.remove()"/>MongoDB</span>
+            <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/redis/redis-original.svg" alt="" onerror="this.remove()"/>Redis</span>
+            <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/elasticsearch/elasticsearch-original.svg" alt="" onerror="this.remove()"/>Elasticsearch</span>
+          </div>
+        </div>
+
+        <div class="skill-card glass">
+          <h3><span class="gi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg></span>Cloud &amp; DevOps</h3>
+          <p class="sub">// ship &amp; observe</p>
+          <div class="chips">
+            <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="" onerror="this.remove()"/>AWS</span>
+            <span class="chip">EC2 · S3 · IAM</span>
+            <span class="chip">API Gateway</span>
+            <span class="chip">CloudWatch</span>
+            <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" alt="" onerror="this.remove()"/>Docker</span>
+            <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/spring/spring-original.svg" alt="" onerror="this.remove()"/>Spring Cloud Config</span>
+            <span class="chip">WAR / Tomcat</span>
+          </div>
+        </div>
+
+        <div class="skill-card glass">
+          <h3><span class="gi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span>Tools</h3>
+          <p class="sub">// the daily workflow</p>
+          <div class="chips">
+            <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" alt="" onerror="this.remove()"/>Git</span>
+            <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-original.svg" alt="" onerror="this.remove()"/>Postman</span>
+            <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/gradle/gradle-original.svg" alt="" onerror="this.remove()"/>Gradle</span>
+            <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/maven/maven-original.svg" alt="" onerror="this.remove()"/>Maven</span>
+            <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jira/jira-original.svg" alt="" onerror="this.remove()"/>Jira</span>
+            <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/azuredevops/azuredevops-original.svg" alt="" onerror="this.remove()"/>Azure Boards</span>
+            <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/swagger/swagger-original.svg" alt="" onerror="this.remove()"/>Swagger</span>
+            <span class="chip">FusionAuth</span>
+          </div>
+        </div>
+
+        <div class="skill-card glass">
+          <h3><span class="gi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>Architecture &amp; Security</h3>
+          <p class="sub">// how it all holds together</p>
+          <div class="chips">
+            <span class="chip">RESTful APIs</span>
+            <span class="chip">Microservices</span>
+            <span class="chip">Event-Driven Architecture</span>
+            <span class="chip">JWT</span>
+            <span class="chip">OAuth2</span>
+            <span class="chip">RLS / FLS Security</span>
+            <span class="chip">Agile · Scrum</span>
+          </div>
+        </div>
+
+        <div class="skill-card glass">
+          <h3><span class="gi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.93 19.07a10 10 0 0 1 0-14.14M19.07 4.93a10 10 0 0 1 0 14.14M7.76 16.24a6 6 0 0 1 0-8.49M16.24 7.76a6 6 0 0 1 0 8.49"/><circle cx="12" cy="12" r="2"/></svg></span>Messaging &amp; Observability</h3>
+          <p class="sub">// events &amp; insight</p>
+          <div class="chips">
+            <span class="chip">AWS SQS (FIFO)</span>
+            <span class="chip">AWS SNS</span>
+            <span class="chip">OpenFeign</span>
+            <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/sentry/sentry-original.svg" alt="" onerror="this.remove()"/>Sentry</span>
+            <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/elasticsearch/elasticsearch-original.svg" alt="" onerror="this.remove()"/>Elastic APM</span>
+            <span class="chip">Glowroot</span>
+            <span class="chip">Spring Cloud Sleuth</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== EXPERIENCE ===================== -->
+<section id="experience" aria-labelledby="experience-h">
+  <div class="wrap sec-head">
+    <h2 class="sec-title reveal" id="experience-h"><span class="n">03 — The Journey</span>Work <span class="accent">experience</span></h2>
+    <div class="reveal" data-d="1">
+      <p class="sec-lead" style="margin-bottom:30px;">From learning the ropes to architecting a domain-owning microservice — here's how my craft has grown across three product teams.</p>
+      <div class="timeline">
+
+        <div class="tl-item">
+          <span class="tl-node" aria-hidden="true"></span>
+          <div class="exp-card glass">
+            <div class="exp-top">
+              <div class="exp-role">Software Engineer · <span class="exp-co">ACE Online</span></div>
+            </div>
+            <div class="exp-meta">
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Nov 2025 — Present</span>
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Hyderabad</span>
+            </div>
+            <span class="exp-proj">◆ Project: online.ace · publisher-service</span>
+            <ul class="exp-list">
+              <li>Built &amp; maintained <b>publisher-service</b>, a Spring Boot microservice owning the <b>content &amp; commerce</b> domain — catalogues, subjects, store listings, coupons, scholarships, campaigns &amp; SEO — within an <b>18-service e-learning platform</b>.</li>
+              <li>Architected the service around <b>domain-driven bounded contexts</b> (controller → service → domain → repository, plus a usecase orchestration layer) so each feature area stays independently evolvable.</li>
+              <li>Implemented <b>event-driven integration</b> with AWS <b>SQS FIFO</b> consumers and <b>SNS</b> publishing for cross-service sync, with failed-event persistence for reliability.</li>
+              <li>Integrated peer services &amp; third parties via <b>OpenFeign / RestTemplate</b> (user, payments, sales, events hub, MirrorFly chat) with a custom Feign error decoder.</li>
+              <li>Engineered a mixed <b>reactive + blocking MongoDB</b> layer; added <b>Redis</b> caching, <b>AWS S3</b> storage &amp; scheduled jobs; externalized config via <b>Spring Cloud Config</b>.</li>
+              <li>Instrumented observability with <b>Sentry, Elastic APM, Glowroot &amp; Sleuth</b> tracing; packaged as a deployable <b>WAR</b> with Dockerized builds.</li>
+            </ul>
+            <button class="pj-more" type="button" data-modal="pubModal" aria-haspopup="dialog" style="margin:18px 0 0;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+              View architecture deep dive
+            </button>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-node" aria-hidden="true"></span>
+          <div class="exp-card glass">
+            <div class="exp-top">
+              <div class="exp-role">Software Engineer · <span class="exp-co">Magellanic Cloud Pvt Ltd</span></div>
+            </div>
+            <div class="exp-meta">
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Sept 2024 — Oct 2025</span>
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Hyderabad</span>
+            </div>
+            <span class="exp-proj">◆ Project: Ivis-SaaS</span>
+            <ul class="exp-list">
+              <li>Built <b>RESTful APIs</b> for project &amp; site-group creation, streamlining <b>customer onboarding</b>.</li>
+              <li>Designed a hierarchical user-management system with <b>Scopes → Roles → Groups</b>, strengthening access control and scalability.</li>
+              <li>Developed secure <b>Vault Configuration APIs</b> and optimized performance using DTOs &amp; reduced DB calls.</li>
+              <li>Engineered backend logic with <b>Kernel services</b> and <b>Redis cache</b> to retrieve, map, and persist data between DTOs and cache.</li>
+              <li>Applied <b>Row-Level (RLS)</b> &amp; <b>Field-Level Security (FLS)</b> for controlled data access.</li>
+              <li>Integrated <b>Elasticsearch</b> for fast, efficient search and added <b>activity logs</b> for auditability.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-node" aria-hidden="true"></span>
+          <div class="exp-card glass">
+            <div class="exp-top">
+              <div class="exp-role">Associate Software Engineer · <span class="exp-co">Motivity Labs</span></div>
+            </div>
+            <div class="exp-meta">
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Nov 2022 — April 2024</span>
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Hyderabad</span>
+            </div>
+            <span class="exp-proj">◆ Project: Digital Reef — Data Rewards</span>
+            <ul class="exp-list">
+              <li>Integrated external <b>Carrier APIs</b> via Spring <b>WebClient</b>, mapping API docs to business requirements.</li>
+              <li>Designed and implemented <b>CRUD operations</b> for MySQL, optimizing access with <b>Spring ORM</b> &amp; Spring MVC.</li>
+              <li>Monitored application logs with <b>AWS CloudWatch</b> to quickly identify and resolve issues.</li>
+              <li>Tuned database queries using <b>indexes</b>, improving response time and overall performance.</li>
+              <li>Wrote <b>JUnit test cases</b> for service layers, controllers &amp; repositories to ensure reliability.</li>
+              <li>Authored <b>architecture diagrams</b> documenting project structure and system workflows.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PROJECTS ===================== -->
+<section id="projects" aria-labelledby="projects-h">
+  <div class="wrap sec-head">
+    <h2 class="sec-title reveal" id="projects-h"><span class="n">04 — Selected Work</span>Featured <span class="accent">projects</span></h2>
+    <div class="reveal" data-d="1">
+      <p class="sec-lead" style="margin-bottom:26px;">A closer look at the products I've helped bring to life — spanning a domain-owning content &amp; commerce microservice, a secure SaaS platform, a data-rewards system, and a full-featured mobile app.</p>
+      <div class="proj-grid">
+
+        <div class="proj glass" data-tilt>
+          <div class="pj-head">
+            <span class="pj-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/spring/spring-original.svg" alt="" onerror="this.parentElement.innerHTML='&#128230;'; this.parentElement.style.fontSize='24px';"/></span>
+            <span class="pj-tag">Microservice · 2025–Now</span>
+          </div>
+          <h3>Publisher Service</h3>
+          <div class="pj-co">ACE Online · online.ace platform</div>
+          <p class="pj-desc">A Spring Boot microservice owning the content &amp; commerce domain of online.ace — course catalogues, subjects, store listings, coupons, scholarships, campaigns &amp; SEO. Built on domain-driven bounded contexts with event-driven SQS/SNS integration, Feign clients, and a reactive/blocking MongoDB layer.</p>
+          <div class="pj-stack">
+            <span>Spring Boot</span><span>MongoDB</span><span>AWS SQS/SNS</span><span>Redis</span><span>OpenFeign</span><span>Docker</span>
+          </div>
+          <button class="pj-more" type="button" data-modal="pubModal" aria-haspopup="dialog">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            Deep dive
+          </button>
+        </div>
+
+        <div class="proj glass" data-tilt>
+          <div class="pj-head">
+            <span class="pj-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span>
+            <span class="pj-tag">SaaS · 2024–25</span>
+          </div>
+          <h3>Ivis-SaaS</h3>
+          <div class="pj-co">Magellanic Cloud · Backend Platform</div>
+          <p class="pj-desc">A multi-tenant SaaS platform with hierarchical access control (Scopes → Roles → Groups), secure Vault configuration APIs, Redis-backed kernel services, and Elasticsearch-powered search — engineered for performance and auditability.</p>
+          <div class="pj-stack">
+            <span>Spring Boot</span><span>Redis</span><span>Elasticsearch</span><span>RLS / FLS</span><span>REST APIs</span>
+          </div>
+        </div>
+
+        <div class="proj glass" data-tilt>
+          <div class="pj-head">
+            <span class="pj-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg></span>
+            <span class="pj-tag">Backend · 2022–24</span>
+          </div>
+          <h3>Digital Reef — Data Rewards</h3>
+          <div class="pj-co">Motivity Labs · Integration System</div>
+          <p class="pj-desc">A data-rewards system integrating external carrier APIs through Spring WebClient, with optimized MySQL CRUD operations, indexed queries for faster responses, CloudWatch monitoring, and a robust JUnit-tested service layer.</p>
+          <div class="pj-stack">
+            <span>Spring MVC</span><span>Spring ORM</span><span>MySQL</span><span>AWS CloudWatch</span><span>JUnit</span>
+          </div>
+        </div>
+
+        <div class="proj glass" data-tilt>
+          <div class="pj-head">
+            <span class="pj-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/flutter/flutter-original.svg" alt="" onerror="this.parentElement.innerHTML='&#128241;'; this.parentElement.style.fontSize='24px';"/></span>
+            <span class="pj-tag">Mobile · Apr–Sep 2024</span>
+          </div>
+          <h3>Sagicor</h3>
+          <div class="pj-co">Motivity Labs · Flutter App</div>
+          <p class="pj-desc">Contributed to a feature-rich Flutter mobile app — building chat messaging, multimedia sharing, Google Drive uploads, social login (Google, Facebook, Twitter), Google Maps location services, and an intuitive calendar for event management.</p>
+          <div class="pj-stack">
+            <span>Flutter</span><span>Google Maps API</span><span>OAuth Social Login</span><span>Google Drive</span><span>Calendar</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== EDUCATION ===================== -->
+<section id="education" aria-labelledby="education-h">
+  <div class="wrap sec-head">
+    <h2 class="sec-title reveal" id="education-h"><span class="n">05 — Foundation</span>Academic <span class="accent">roots</span></h2>
+    <div class="reveal" data-d="1">
+      <p class="sec-lead" style="margin-bottom:24px;">Where the fundamentals were forged.</p>
+      <div class="edu-card glass">
+        <span class="cap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span>
+        <div>
+          <h3>B.Tech in Information Technology</h3>
+          <div class="inst">Aurora's Technological and Research Institute · Hyderabad, Telangana</div>
+        </div>
+        <span class="yr">2022</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CONTACT ===================== -->
+<section id="contact" aria-labelledby="contact-h">
+  <div class="wrap sec-head">
+    <h2 class="sec-title reveal" id="contact-h"><span class="n">06 — Say Hello</span>Let's <span class="accent">talk</span></h2>
+    <div class="reveal" data-d="1" style="width:100%;">
+      <p class="sec-lead" style="margin-bottom:26px;">Have a role, a project, or just a question about backend architecture? I'd love to hear from you — pick whatever's easiest.</p>
+      <div class="contact-grid">
+        <div class="contact-info">
+          <a class="ci-tile glass" href="mailto:ankamsrivani23@gmail.com">
+            <span class="ci-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
+            <div><h4>Email</h4><p>ankamsrivani23@gmail.com</p></div>
+          </a>
+          <a class="ci-tile glass" href="tel:+917780491760">
+            <span class="ci-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+            <div><h4>Phone</h4><p>+91 77804 91760</p></div>
+          </a>
+          <a class="ci-tile glass" href="https://linkedin.com/in/srivaniankam" target="_blank" rel="noopener">
+            <span class="ci-ico"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg></span>
+            <div><h4>LinkedIn</h4><p>linkedin.com/in/srivaniankam</p></div>
+          </a>
+          <a class="ci-tile glass" href="Srivani%20Ankam.pdf" download>
+            <span class="ci-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
+            <div><h4>Resume</h4><p>Download PDF</p></div>
+          </a>
+        </div>
+
+        <form class="contact-form glass" id="contactForm">
+          <div class="field">
+            <label for="cf-name">Your name</label>
+            <input type="text" id="cf-name" name="name" placeholder="Jane Recruiter" autocomplete="name" required />
+          </div>
+          <div class="field">
+            <label for="cf-email">Your email</label>
+            <input type="email" id="cf-email" name="email" placeholder="jane@company.com" autocomplete="email" required />
+          </div>
+          <div class="field">
+            <label for="cf-msg">Message</label>
+            <textarea id="cf-msg" name="message" rows="4" placeholder="Hi Srivani, we'd love to talk about…" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            Send message
+          </button>
+          <p class="form-note" id="formNote" role="status" aria-live="polite">Opens in your email app — no data is stored.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ===================== PROJECT DEEP-DIVE MODAL ===================== -->
+<div class="modal-overlay" id="pubModal" role="dialog" aria-modal="true" aria-labelledby="pubModalTitle" aria-hidden="true">
+  <div class="modal glass" tabindex="-1">
+    <button class="modal-close" type="button" aria-label="Close deep dive">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <span class="m-eyebrow">Deep dive · Backend Microservice</span>
+    <h3 id="pubModalTitle">Publisher Service</h3>
+    <div class="m-co">ACE Online · online.ace e-learning platform · Software Engineer (Nov 2025 – Present)</div>
+    <div class="m-scale">
+      <span>~413 source files</span><span>17 bounded contexts</span><span>18-service platform</span><span>Spring Boot 2.3 · Java 8</span>
+    </div>
+    <p class="m-lead">Engineered <b>publisher-service</b>, the Spring Boot microservice owning the content &amp; commerce domain of online.ace — course catalogues, subjects, store listings, coupons/referrals, scholarships, campaigns, and SEO. Designed around domain-driven bounded contexts with a mixed reactive/blocking MongoDB layer, event-driven SQS/SNS integration, and Feign/REST clients to peer services. Delivered a WAR-deployable, cloud-configured service with Redis caching, AWS S3 integration, and centralized exception handling.</p>
+
+    <h4>Architecture</h4>
+    <ul class="m-list">
+      <li>Owns catalogues, subjects, store listings, coupons, scholarships, campaigns, SEO &amp; announcements across <b>17 bounded contexts</b> (~413 source files).</li>
+      <li>Layered as <b>controller → service → domain → repository</b>, with a dedicated <b>usecase</b> orchestration layer for complex flows, keeping each feature area independently evolvable.</li>
+    </ul>
+
+    <h4>Integration &amp; Messaging</h4>
+    <ul class="m-list">
+      <li><b>Event-driven, asynchronous</b> integration using AWS <b>SQS FIFO</b> consumers and <b>SNS</b> publishing (via an events-hub service) to sync subjects, catalogues, coupons &amp; rewards — including <b>failed-event persistence</b> for reliability.</li>
+      <li>Peer &amp; third-party integration through <b>OpenFeign</b> and <b>RestTemplate</b> clients — user, payments, sales, the event-publisher hub, and the <b>MirrorFly</b> chat provider — with a custom Feign <b>error decoder</b> mapping failures to a unified exception type.</li>
+    </ul>
+
+    <h4>Persistence &amp; Infrastructure</h4>
+    <ul class="m-list">
+      <li>Mixed <b>reactive + blocking MongoDB</b> persistence (Reactive Mono/Flux repositories alongside blocking ones), tuned per context for a servlet-stack runtime.</li>
+      <li><b>Redis</b> caching, <b>AWS S3</b> storage, and scheduled jobs; all configuration externalized through <b>Spring Cloud Config</b> for environment-specific deployments.</li>
+    </ul>
+
+    <h4>Cross-cutting &amp; Quality</h4>
+    <ul class="m-list">
+      <li>Standardized concerns: a centralized <b>@ControllerAdvice</b> exception handler, a custom <b>@DTO</b> binding/validation mechanism (custom RequestResponseBodyMethodProcessor), reusable pagination/error response shapes, and custom date (de)serializers.</li>
+      <li>Observability via <b>Sentry, Elastic APM, Glowroot</b> and <b>Spring Cloud Sleuth</b> distributed tracing; packaged as a deployable <b>WAR</b> with Dockerized builds.</li>
+      <li>Documented the architecture &amp; cross-service contracts as a living knowledge layer (<b>ARCHITECTURE.md</b> + estate-wide <b>ESTATE.md</b>) to speed onboarding and safe cross-service changes.</li>
+    </ul>
+
+    <h4>Stack</h4>
+    <div class="m-stack">
+      <span>Spring Boot 2.3</span><span>Java 8</span><span>MongoDB (Reactive)</span><span>Redis</span><span>AWS SQS / SNS / S3</span><span>OpenFeign</span><span>RestTemplate</span><span>Spring Cloud Config</span><span>Sentry</span><span>Elastic APM</span><span>Glowroot</span><span>Sleuth</span><span>Docker</span><span>WAR</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="wrap foot-inner">
+    <p>© <span id="year"></span> Srivani Ankam · Designed &amp; built with <span class="heart" aria-hidden="true">♥</span> in Hyderabad</p>
+    <div class="foot-social">
+      <a href="mailto:ankamsrivani23@gmail.com" aria-label="Email Srivani">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      </a>
+      <a href="https://linkedin.com/in/srivaniankam" target="_blank" rel="noopener" aria-label="LinkedIn profile">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+      </a>
+      <a href="tel:+917780491760" aria-label="Call Srivani">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<button class="totop" id="toTop" aria-label="Back to top" tabindex="-1">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+</button>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Mark all inline SVGs decorative (every interactive control has a text/aria label) */
+  document.querySelectorAll('svg').forEach(function(s){ s.setAttribute('aria-hidden','true'); s.setAttribute('focusable','false'); });
+
+  /* Year */
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  /* Theme toggle (light / dark) — preference persisted in localStorage */
+  var root = document.documentElement;
+  var themeToggle = document.getElementById('themeToggle');
+  function syncThemeLabel(){
+    var isLight = root.getAttribute('data-theme') === 'light';
+    if(themeToggle) themeToggle.setAttribute('aria-label', isLight ? 'Switch to dark theme' : 'Switch to light theme');
+  }
+  syncThemeLabel();
+  if(themeToggle){
+    themeToggle.addEventListener('click', function(){
+      if(!reduce) root.classList.add('theme-transition');
+      var next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      if(next === 'light'){ root.setAttribute('data-theme','light'); } else { root.removeAttribute('data-theme'); }
+      try{ localStorage.setItem('theme', next); }catch(e){}
+      syncThemeLabel();
+      if(!reduce) setTimeout(function(){ root.classList.remove('theme-transition'); }, 520);
+    });
+  }
+
+  /* Project deep-dive modal(s) */
+  (function(){
+    var lastFocused = null;
+    function openModal(m){
+      lastFocused = document.activeElement;
+      m.classList.add('open'); m.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+      var card = m.querySelector('.modal'); if(card) card.focus();
+    }
+    function closeModal(m){
+      m.classList.remove('open'); m.setAttribute('aria-hidden','true');
+      document.body.style.overflow = '';
+      if(lastFocused && lastFocused.focus) lastFocused.focus();
+    }
+    document.querySelectorAll('[data-modal]').forEach(function(btn){
+      btn.addEventListener('click', function(){ var m = document.getElementById(btn.getAttribute('data-modal')); if(m) openModal(m); });
+    });
+    document.querySelectorAll('.modal-overlay').forEach(function(m){
+      m.addEventListener('click', function(e){ if(e.target === m) closeModal(m); });
+      var x = m.querySelector('.modal-close'); if(x) x.addEventListener('click', function(){ closeModal(m); });
+      m.addEventListener('keydown', function(e){
+        if(e.key === 'Escape'){ closeModal(m); return; }
+        if(e.key === 'Tab'){
+          var f = m.querySelectorAll('button, [href], input, textarea, select, [tabindex]:not([tabindex="-1"])');
+          if(!f.length) return;
+          var first = f[0], last = f[f.length - 1];
+          if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+          else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+        }
+      });
+    });
+  })();
+
+  /* Navbar scroll state + scroll progress + back-to-top */
+  var nav = document.getElementById('nav');
+  var progress = document.getElementById('progress');
+  var toTop = document.getElementById('toTop');
+  function onScroll(){
+    var y = window.scrollY || window.pageYOffset;
+    nav.classList.toggle('scrolled', y > 30);
+    var show = y > 600;
+    toTop.classList.toggle('show', show);
+    toTop.tabIndex = show ? 0 : -1;
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    progress.style.width = (h > 0 ? (y / h) * 100 : 0) + '%';
+  }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+
+  /* Mobile menu with focus management */
+  var toggle = document.getElementById('navToggle');
+  var menu = document.getElementById('mobileMenu');
+  var inertEls = [document.getElementById('main'), document.querySelector('header.hero'), document.querySelector('footer')];
+  function setMenu(open){
+    nav.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+    document.body.style.overflow = open ? 'hidden' : '';
+    inertEls.forEach(function(el){ if(!el) return; if(open){ el.setAttribute('inert',''); } else { el.removeAttribute('inert'); } });
+    if(open){ var first = menu.querySelector('a'); if(first) first.focus(); }
+    else { toggle.focus(); }
+  }
+  toggle.addEventListener('click', function(){ setMenu(!nav.classList.contains('open')); });
+  menu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ setMenu(false); }); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && nav.classList.contains('open')) setMenu(false); });
+  menu.addEventListener('keydown', function(e){
+    if(e.key !== 'Tab') return;
+    var f = menu.querySelectorAll('a, button'); if(!f.length) return;
+    var first = f[0], last = f[f.length - 1];
+    if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+    else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+  });
+
+  /* Back to top */
+  toTop.addEventListener('click', function(){ window.scrollTo({ top:0, behavior: reduce ? 'auto':'smooth' }); });
+
+  /* Scroll reveal */
+  var reveals = document.querySelectorAll('.reveal:not(.in)');
+  if ('IntersectionObserver' in window && !reduce){
+    var ro = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); ro.unobserve(e.target); } });
+    }, { threshold:0.12, rootMargin:'0px 0px -8% 0px' });
+    reveals.forEach(function(el){ ro.observe(el); });
+  } else {
+    reveals.forEach(function(el){ el.classList.add('in'); });
+  }
+
+  /* Stat counters */
+  function animateCount(el){
+    var to = parseInt(el.getAttribute('data-to'), 10) || 0;
+    if (reduce){ el.textContent = to; return; }
+    var dur = 1400, start = null;
+    function step(ts){
+      if(!start) start = ts;
+      var p = Math.min((ts - start) / dur, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(eased * to);
+      if(p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  var counted = false;
+  var counters = document.querySelectorAll('.count');
+  if ('IntersectionObserver' in window && counters.length){
+    var co = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting && !counted){ counted = true; counters.forEach(animateCount); co.disconnect(); }
+      });
+    }, { threshold:0.4 });
+    co.observe(counters[0].closest('.stats'));
+  } else { counters.forEach(animateCount); }
+
+  /* Active nav link via section observer */
+  var navAnchors = Array.prototype.slice.call(document.querySelectorAll('#navLinks a'));
+  var sections = navAnchors.map(function(a){ return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+  if ('IntersectionObserver' in window){
+    var so = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          var id = e.target.getAttribute('id');
+          navAnchors.forEach(function(a){ a.classList.toggle('active', a.getAttribute('href') === '#'+id); });
+        }
+      });
+    }, { rootMargin:'-45% 0px -50% 0px' });
+    sections.forEach(function(s){ so.observe(s); });
+  }
+
+  /* Typed roles */
+  var typed = document.getElementById('typed');
+  var roles = ['Java Developer','Spring Boot Engineer','Microservices Developer','REST API Specialist','AWS Backend'];
+  if (typed && !reduce){
+    var ri = 0, ci = 0, deleting = false;
+    function tick(){
+      var word = roles[ri];
+      if(!deleting){
+        typed.textContent = word.slice(0, ++ci);
+        if(ci === word.length){ deleting = true; return setTimeout(tick, 1600); }
+      } else {
+        typed.textContent = word.slice(0, --ci);
+        if(ci === 0){ deleting = false; ri = (ri+1) % roles.length; }
+      }
+      setTimeout(tick, deleting ? 45 : 95);
+    }
+    tick();
+  } else if (typed){ typed.textContent = roles[0]; }
+
+  /* Cursor spotlight */
+  var spot = document.getElementById('spotlight');
+  if (spot && !reduce && window.matchMedia('(pointer:fine)').matches){
+    window.addEventListener('mousemove', function(e){
+      spot.style.opacity = '1';
+      spot.style.left = e.clientX + 'px';
+      spot.style.top = e.clientY + 'px';
+    }, { passive:true });
+    document.addEventListener('mouseleave', function(){ spot.style.opacity = '0'; });
+  }
+
+  /* Project card 3D tilt */
+  if (!reduce && window.matchMedia('(pointer:fine)').matches){
+    document.querySelectorAll('[data-tilt]').forEach(function(card){
+      card.addEventListener('mousemove', function(e){
+        var r = card.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width - 0.5;
+        var py = (e.clientY - r.top) / r.height - 0.5;
+        card.style.transform = 'perspective(900px) rotateX(' + (-py*5) + 'deg) rotateY(' + (px*6) + 'deg) translateY(-4px)';
+      });
+      card.addEventListener('mouseleave', function(){ card.style.transform = ''; });
+    });
+  }
+
+  /* Contact form -> mailto */
+  var form = document.getElementById('contactForm');
+  var note = document.getElementById('formNote');
+  if (form){
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      var rawName = document.getElementById('cf-name').value.trim();
+      var email = document.getElementById('cf-email').value.trim();
+      var msg = document.getElementById('cf-msg').value.trim();
+      var subject = encodeURIComponent('Portfolio enquiry from ' + rawName);
+      var body = encodeURIComponent(msg + '\n\n— ' + rawName + ' (' + email + ')');
+      window.location.href = 'mailto:ankamsrivani23@gmail.com?subject=' + subject + '&body=' + body;
+      note.textContent = 'Thanks! Your email app should now be open ✦';
+      note.classList.add('ok');
+    });
+  }
+})();
+</script>
+</body>
+</html>
